@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DashBoard } from './components/DashBoard';
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL} > 
+<BrowserRouter basename={process.env.PUBLIC_URL || '/react-todo-app'}>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
