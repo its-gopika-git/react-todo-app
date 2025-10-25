@@ -1,11 +1,17 @@
-
-
+import React from 'react';
+import { Home } from './components/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { DashBoard } from './components/DashBoard';
 function App() {
   return (
-    <div>
-      <h1>Hello, World!</h1>
-      <p>Welcome to my React application.</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+      <Routes>
+        <Route path="/dashboard" element={<DashBoard/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
