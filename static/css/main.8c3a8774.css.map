@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.8c3a8774.css","mappings":"AACA,gBACE,WAAY,CACZ,QAAS,CACT,SACF","sources":["assets/App.css"],"sourcesContent":["/* src/index.css or App.css */\r\nhtml, body, #root {\r\n  height: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n}"],"names":[],"sourceRoot":""}
