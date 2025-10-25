@@ -40,7 +40,7 @@ export const Home = () => {
                 <Button variant="contained"
                 onClick={()=>{
                     setShowUserDetails(true);
-                }} color="primary" href="#/todos" sx={{mt:2,borderRadius: '20px',color:'#e6a700' ,backgroundColor: '#ffffffff'
+                }} color="primary" sx={{mt:2,borderRadius: '20px',color:'#e6a700' ,backgroundColor: '#ffffffff'
              }}>
                 <Typography sx={{
                     fontFamily: '"Roboto", sans-serif',
