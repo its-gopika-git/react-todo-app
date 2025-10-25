@@ -16,7 +16,7 @@ export const DashBoard = () => {
     const dispatch = useDispatch();
     const todos = useSelector((state) => state.todos);
     const [openTaskDialog, setOpenTaskDialog] = React.useState(false);
-    const [sortTasksBy, setSortTasksBy] = React.useState(false);        
+    const [sortTasksBy, setSortTasksBy] = React.useState(false);
     const { userDetails } = location.state || {};
     const displayedTodos = React.useMemo(() => {
         // use lodash sortBy when sorting is requested
@@ -40,30 +40,38 @@ export const DashBoard = () => {
                         justifyContent: 'center',
                         height: '100vh',
                         width: '100%',
-                        backgroundColor: '#f5f5f5',
+                        backgroundColor: '#ffffffff',
                         borderRadius: '8px',
                     }}>
-                        <Box sx={{
-                            border: '2px dashed #999999',
-                            borderRadius: '8px',
-                            padding: '100px',
-                            textAlign: 'center',
-                            mx: 'auto',
+                        <img
+                            style={{ width: '300px' }}
+                            alt="No tasks available"
+                            src={"https://img.freepik.com/premium-vector/lady-completes-tasks-notes-calendar-cartoon-character-practicing-time-management-efficiency-business-process-organizing-time-when-working-good-business-productivity-process-vector_776652-2279.jpg"} />
+                        <Typography sx={{
+                            color: '#e6a700',
+                            fontFamily: '"Roboto", sans-serif',
+                            fontSize: '16px',
+                            letterSpacing: '2px',
+                            fontWeight: 'bold',
+                            mb: 1,
                         }}>
-                            <Typography sx={{
-                                color: '#999999',
-                                fontFamily: '"Roboto", sans-serif',
-                                fontSize: '18px',
-                            }}>
-                                No tasks available. Please add a task to get started.
-                            </Typography>
-                            <Grow in={true} timeout={1200}>
-                                <PlaylistAddCircleIcon onClick={() => {
-                                    setOpenTaskDialog(true);
-                                }} sx={{ fontSize: 50, color: '#e6a700', mt: 2 }} />
-                            </Grow>
+                            No tasks available.
+                        </Typography>
+                         <Typography sx={{
+                            color: '#999999',
+                            fontFamily: '"Roboto", sans-serif',
+                            fontSize: '14px',
+                            letterSpacing: '2px',
+                        }}>
+                            Click the plus icon to add your first task!
+                        </Typography>
+                        <Grow in={true} timeout={1200}>
+                            <PlaylistAddCircleIcon onClick={() => {
+                                setOpenTaskDialog(true);
+                            }} sx={{ fontSize: 50, color: '#e6a700', mt: 2 }} />
+                        </Grow>
 
-                        </Box>
+
 
                     </Box>
                 ) : <>
@@ -83,7 +91,7 @@ export const DashBoard = () => {
                                     {`Your Tasks (${todos.length})`}
                                 </Typography>
                                 <Stack direction={"row"} alignItems="center" justifyContent={"flex-end"}>
-                                    <SwapVertIcon sx={{ fontSize: 30, color: '#e6a700', cursor: 'pointer', mx: 2 }} titleAccess="Sort Tasks by Title" onClick={()=>{
+                                    <SwapVertIcon sx={{ fontSize: 30, color: '#e6a700', cursor: 'pointer', mx: 2 }} titleAccess="Sort Tasks by Title" onClick={() => {
                                         setSortTasksBy(!sortTasksBy);
                                     }} />
                                     <PlaylistAddCircleIcon titleAccess="Add Task" onClick={() => {
@@ -132,9 +140,9 @@ export const DashBoard = () => {
                                             {todo.taskInfo.title}
                                         </Typography>
                                         {todo.taskInfo.important && <PriorityHighIcon sx={{ color: 'red' }} />}
-                                    <Stack direction="row" sx={{ ml: 'auto', justifyContent: 'flex-end' }}>
-                                        <DeleteIcon sx={{ color: '#ffffffff' }} titleAccess="Delete Task" onClick={() => dispatch(removeTodo(todo.id))} />
-                                    </Stack>
+                                        <Stack direction="row" sx={{ ml: 'auto', justifyContent: 'flex-end' }}>
+                                            <DeleteIcon sx={{ color: '#ffffffff' }} titleAccess="Delete Task" onClick={() => dispatch(removeTodo(todo.id))} />
+                                        </Stack>
                                     </Stack>
                                     <Divider sx={{ mb: 1, borderColor: '#ffffffff' }} />
                                     <Typography sx={{
@@ -157,7 +165,7 @@ export const DashBoard = () => {
                                     }}>
                                         {todo.taskInfo.description}
                                     </Typography>
-                                    
+
                                 </Card>
                             ))
                         }

@@ -22,14 +22,14 @@ const AddTask = ({ open, onClose }) => {
     const [description, setDescription] = useState('');
     const [error, setError] = useState('');
     const dispatch = useDispatch();
-     const [category, setCategory] = useState('personal');
+     const [category, setCategory] = useState('');
     const [important, setImportant] = useState(false);
 
     const reset = () => {
         setTitle('');
         setDescription('');
         setError('');
-        setCategory('personal');
+        setCategory('');
         setImportant(false);
     };
 
@@ -75,7 +75,7 @@ const AddTask = ({ open, onClose }) => {
                         aria-label="close"
                         onClick={() => handleClose()}
                         size="small">
-                        <CloseIcon sx={{ color: 'red' }} />
+                        <CloseIcon sx={{ color: '#fff' }} />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent dividers>
@@ -89,6 +89,7 @@ const AddTask = ({ open, onClose }) => {
                                 if (error) setError('');
                             }}
                             error={!!error}
+                            placeholder='Enter task title'
                             fullWidth
                             variant="outlined"
                             InputLabelProps={{ shrink: true }}
@@ -142,6 +143,7 @@ const AddTask = ({ open, onClose }) => {
 
                         <TextField
                             label="Description"
+                            placeholder='Enter task description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             fullWidth
@@ -152,8 +154,9 @@ const AddTask = ({ open, onClose }) => {
                             sx={{
                                 '& .MuiInputLabel-root': { color: '#e6a700' },
                                 '& .MuiInputLabel-root.Mui-focused': { color: '#e6a700' },
-                                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#e6a700'
+                                '& .MuiOutlinedInput-root': {
+                                    '& .MuiOutlinedInput-notchedOutline': { borderColor: '#e6a700' },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#e6a700' }
                                 },
                                 fontFamily: '"Roboto", sans-serif',
                                 fontSize: '14px',

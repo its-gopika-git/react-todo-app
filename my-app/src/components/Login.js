@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -89,12 +89,13 @@ export const LogInPopup = (props) => {
                         color: '#ffffffff',
                         letterSpacing: '2px',
                         mb: 2,
+                        mt: 1
                     }}>
                         Let's get to know you better.
                     </Typography>
                     <TextField
                         required
-                        label="Enter your name / nickname"
+                        label="User Name"
                         type="text"
                         fullWidth
                         variant="standard"
@@ -115,11 +116,16 @@ export const LogInPopup = (props) => {
                             )
                         }}
                         sx={{
-                            '& .MuiInputLabel-root': { color: '#ffffffff' },
+                            '& .MuiInputLabel-root': {
+                                color: error? 'red' : '#ffffffff',
+                                fontFamily: '"Roboto", sans-serif',
+                                fontSize: '16px',
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
                             '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
                             '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
                             '& .MuiInputBase-input': { color: '#ffffff', },
-                            my:2
+                            my: 2
                         }}
 
                     />
@@ -135,11 +141,16 @@ export const LogInPopup = (props) => {
                             setUserDetails(newDetails);
                         }}
                         sx={{
-                            '& .MuiInputLabel-root': { color: '#ffffffff' },
+                            '& .MuiInputLabel-root': {
+                                color: '#ffffffff',
+                                fontFamily: '"Roboto", sans-serif',
+                                fontSize: '16px',
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
                             '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
                             '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
                             '& .MuiInputBase-input': { color: '#ffffff', },
-                            my:2
+                            my: 2
                         }}
                         InputProps={{
                             startAdornment: (
@@ -162,7 +173,12 @@ export const LogInPopup = (props) => {
                         }}
                         sx={{
                             my: 2,
-                            '& .MuiInputLabel-root': { color: '#ffffffff' },
+                            '& .MuiInputLabel-root': {
+                                color: '#ffffffff',
+                                fontFamily: '"Roboto", sans-serif',
+                                fontSize: '16px',
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
                             '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
                             '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
                             '& .MuiInputBase-input': { color: '#ffffff', },
