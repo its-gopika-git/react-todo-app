@@ -7,47 +7,75 @@ import {
     Button,
     Stack,
     Typography,
-    InputAdornment
+    InputAdornment,
+    Box,
+    Divider,
+    IconButton,
+    DialogTitle,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import MailIcon from '@mui/icons-material/Mail';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useNavigate } from 'react-router-dom';
+import UploadAvatars from './UploadProfile';
+import CloseIcon from '@mui/icons-material/Close';
 export const LogInPopup = (props) => {
     const { open, onClose } = props;
     const navigate = useNavigate();
     const [userDetails, setUserDetails] = useState(
         [
             {
-                name: '',
                 email: '',
-                profilePicture: ''
+                password: '',
             }
         ]
     );
-    const [error, setError] = useState('');
+    const [avatarSrc, setAvatarSrc] = React.useState(undefined);
+    const [error, setError] = useState({
+        email: '',
+        password: '',
+    });
 
     useEffect(() => {
         if (!open) {
-            setError('');
+            setError({
+                email: '',
+                password: '',
+            })
             setUserDetails([
                 {
-                    name: '',
                     email: '',
-                    profilePicture: ''
+                    password: '',
                 }
             ]);
+            setAvatarSrc("")
         }
     }, [open]);
 
     const handleSave = () => {
-        const trimmed = userDetails[0].name.trim();
-        if (!trimmed) {
-            setError('Please enter your name');
+        const trimmedEmail = userDetails[0].email.trim();
+        if (!trimmedEmail) {
+            setError({
+                email: 'Please enter your email',
+                password: '',
+            })
+            return;
+        }
+        if (trimmedEmail.length < 5 || !trimmedEmail.includes('@')) {
+            setError({
+                email: 'Please enter a valid email',
+                password: '',
+            })
+            return;
+        }
+        if (!userDetails[0].password) {
+            setError({
+                email: '',
+                password: 'Please enter your password',
+            })
             return;
         }
         onClose && onClose();
-        navigate('/dashboard', { state: { userDetails: { ...userDetails[0], name: trimmed } } });
+        navigate('/dashboard', { state: { userDetails: { ...userDetails[0], email: trimmedEmail } ,avatarSrc: avatarSrc } });
     };
 
     const handleKeyDown = (e) => {
@@ -57,8 +85,6 @@ export const LogInPopup = (props) => {
     return (
         <Dialog
             open={open}
-            fullWidth
-            maxWidth="xs"
             onClose={(event, reason) => {
                 if (reason === 'backdropClick') return;
                 onClose && onClose(event, reason);
@@ -67,150 +93,99 @@ export const LogInPopup = (props) => {
             BackdropProps={{ onClick: (e) => e.stopPropagation() }}
             sx={{
                 '& .MuiDialog-paper': {
-                    borderRadius: '15px',
-                    backgroundColor: '#e6a700'
+                    borderRadius: '12px',
+                    padding: '0 12px 12px 0px',
+                    width: '330px',
+                    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
                 }
             }}>
-
             <DialogContent>
-                <Stack direction="column" alignItems="center">
-                    <Typography sx={{
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: '20px',
-                        fontWeight: 'bold',
-                        color: '#ffffffff',
-                    }}>
-                        Welcome!
-                    </Typography>
+                <Typography sx={{
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: '#e6a700',
+                    textAlign: 'center',
+                    mb: 1,
+                }}>
+                    {"Hi, Welcome!"}
+                </Typography>
+                <Divider>
                     <Typography sx={{
                         fontFamily: '"Roboto", sans-serif',
                         fontSize: '12px',
-                        fontWeight: '500',
-                        color: '#ffffffff',
-                        letterSpacing: '2px',
-                        mb: 2,
-                        mt: 1
-                    }}>
-                        Let's get to know you better.
-                    </Typography>
-                    <TextField
-                        required
-                        label="User Name"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={userDetails[0].name}
-                        onChange={(e) => {
-                            const newDetails = [...userDetails];
-                            newDetails[0].name = e.target.value;
-                            setUserDetails(newDetails);
-                            if (error) setError('');
-                        }}
-                        onKeyDown={handleKeyDown}
-                        error={!!error}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <PersonIcon sx={{ color: '#ffffffff' }} />
-                                </InputAdornment>
-                            )
-                        }}
-                        sx={{
-                            '& .MuiInputLabel-root': {
-                                color: error? 'red' : '#ffffffff',
-                                fontFamily: '"Roboto", sans-serif',
-                                fontSize: '16px',
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
-                            '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
-                            '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
-                            '& .MuiInputBase-input': { color: '#ffffff', },
-                            my: 2
-                        }}
-
-                    />
-                    <TextField
-                        label="Email (optional)"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                        value={userDetails[0].email}
-                        onChange={(e) => {
-                            const newDetails = [...userDetails];
-                            newDetails[0].email = e.target.value;
-                            setUserDetails(newDetails);
-                        }}
-                        sx={{
-                            '& .MuiInputLabel-root': {
-                                color: '#ffffffff',
-                                fontFamily: '"Roboto", sans-serif',
-                                fontSize: '16px',
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
-                            '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
-                            '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
-                            '& .MuiInputBase-input': { color: '#ffffff', },
-                            my: 2
-                        }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <MailIcon sx={{ color: '#ffffffff' }} />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <TextField
-                        label="Profile Picture URL (optional)"
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                        value={userDetails[0].profilePicture}
-                        onChange={(e) => {
-                            const newDetails = [...userDetails];
-                            newDetails[0].profilePicture = e.target.value;
-                            setUserDetails(newDetails);
-                        }}
-                        sx={{
-                            my: 2,
-                            '& .MuiInputLabel-root': {
-                                color: '#ffffffff',
-                                fontFamily: '"Roboto", sans-serif',
-                                fontSize: '16px',
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': { color: '#ffffff' },
-                            '& .MuiInput-underline:before': { borderBottomColor: '#f1f1f1ff' },
-                            '& .MuiInput-underline:after': { borderBottomColor: '#ffffff' },
-                            '& .MuiInputBase-input': { color: '#ffffff', },
-                        }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AddPhotoAlternateIcon sx={{ color: '#ffffffff' }} />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </Stack>
-            </DialogContent>
-            <DialogActions sx={{ px: 3, pb: 2 }}>
-                <Button onClick={onClose}>
-                    <Typography sx={{
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        textTransform: 'none',
+                        color: '#e6a700',
+                        textAlign: 'center',
                         letterSpacing: '1px',
-                        color: '#ffffffff'
                     }}>
-                        Cancel
+                        {"Let's get setup your account"}
                     </Typography>
-                </Button>
+                </Divider>
+                <Stack direction={"column"} alignItems={"center"} sx={{ mt: 2 }}    >
+                    <UploadAvatars avatarSrc={avatarSrc} setAvatarSrc={setAvatarSrc} />
+                </Stack>
+                <Box>
+                    {[
+                        {
+                            field: 'email',
+                            label: 'Email',
+                            type: 'text',
+                            required: true,
+                            icon: <MailIcon sx={{ color: '#e6a700' }} />
+                        },
+                        {
+                            field: 'password',
+                            label: 'Password',
+                            type: 'password',
+                            icon: <LockOutlineIcon sx={{ color: '#e6a700' }} />
+                        }
+                    ].map((item) => (
+                        <TextField
+                            key={item.field}
+                            required={item.required}
+                            label={item.label}
+                            type={item.type}
+                            variant="standard"
+                            helperText={error[item.field]}
+                            error={!!error[item.field]}
+                            value={userDetails[0][item.field]}
+                            onChange={(e) => {
+                                const newDetails = [...userDetails];
+                                newDetails[0][item.field] = e.target.value;
+                                setUserDetails(newDetails);
+                                if (error && item.field === 'email') setError('');
+                            }}
+                            onKeyDown={handleKeyDown}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {item.icon}
+                                    </InputAdornment>
+                                )
+                            }}
+                            sx={{
+                                '& .MuiInputLabel-root': {
+                                    color: error[item.field] ? 'red' : '#e6a700',
+                                    fontFamily: '"Roboto", sans-serif',
+                                    fontSize: '14px',
+                                    fontWeight: 500
+                                },
+                                '& .MuiInputLabel-root.Mui-focused': { color: '#e6a700' },
+                                '& .MuiInput-underline:before': { borderBottomColor: '#e6a700' },
+                                '& .MuiInput-underline:after': { borderBottomColor: '#e6a700' },
+                                mb: item.field === 'email' ? 3 : 0,
+                                width: '300px'
+                            }}
+                        />
+                    ))}
+                </Box>
+            </DialogContent>
+            <DialogActions sx={{ pb: 2 }}>
                 <Button variant="contained"
                     sx={{
                         borderRadius: '20px',
-                        color: '#e6a700',
-                        backgroundColor: '#ffffffff',
+                        color: '#ffffff',
+                        backgroundColor: '#e6a700ff',
                     }}
                     onClick={handleSave}>
                     <Typography sx={{
@@ -219,7 +194,7 @@ export const LogInPopup = (props) => {
                         fontWeight: 'bold',
                         textTransform: 'none',
                         letterSpacing: '1px',
-                        color: '#e6a700'
+                        color: '#ffffff'
                     }}>
                         Continue
                     </Typography>
@@ -228,4 +203,3 @@ export const LogInPopup = (props) => {
         </Dialog>
     );
 };
-//

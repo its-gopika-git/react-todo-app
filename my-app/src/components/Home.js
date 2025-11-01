@@ -2,8 +2,10 @@ import React from "react";
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Grow from '@mui/material/Grow';
-import Button from "@mui/material/Button";
+import { SpeedDial, SpeedDialAction, Tooltip } from '@mui/material';
 import { LogInPopup } from "./Login";
+import AddIcon from '@mui/icons-material/Add';
+import LoginIcon from '@mui/icons-material/Login';
 export const Home = () => {
     const [showuserDetails, setShowUserDetails] = React.useState(false);
     return (
@@ -15,45 +17,54 @@ export const Home = () => {
                 </Grow>
                 <Grow in={true} timeout={1000}>
                     <Typography sx={{
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: '18px',
+                        fontFamily: '"Macondo", cursive',
+                        fontSize: '28px',
                         color: '#ffffffff',
-                        letterSpacing: '2px',
+                        letterSpacing: '1.5px',
                         fontWeight: 'bold',
-                        my: 1,
+                        my: .5,
                     }}>
-                        Task Planner
+                        My Notes
                     </Typography>
                 </Grow>
-                <Grow in={true} timeout={1200}>
-                    <Typography sx={{
-                        fontFamily: '"Roboto", sans-serif',
-                        fontSize: '12px',
-                        color: '#ffffffff',
-                        letterSpacing: '2px',
-                        fontWeight: '500',
-                    }}>
-                        Manage your tasks efficiently
-                    </Typography>
-                </Grow>
-                <Grow in={true} timeout={1500}>
-                    <Button variant="contained"
-                        onClick={() => {
-                            setShowUserDetails(true);
-                        }} color="primary" sx={{
-                            mt: 2, borderRadius: '20px', color: '#e6a700', backgroundColor: '#ffffffff'
-                        }}>
-                        <Typography sx={{
+            </Stack>
+            <Tooltip
+                title="Get Started"
+                placement="left"
+                arrow
+                componentsProps={{
+                    tooltip: {
+                        sx: {
+                            bgcolor: '#ffffff',
+                            color: '#e6a700',
+                            borderRadius: '8px',
                             fontFamily: '"Roboto", sans-serif',
                             fontSize: '14px',
                             fontWeight: 'bold',
-                            textTransform: 'none',
-                        }}>
-                            Let's Organize
-                        </Typography>
-                    </Button>
-                </Grow>
-            </Stack>
+                            border: '1px solid #e6a700',
+                            '& .MuiTooltip-arrow': {
+                                color: '#ffffff',
+                            },
+                        },
+                    },
+                }}
+            >
+                <SpeedDial
+                    ariaLabel="Actions"
+                    sx={{
+                        position: 'fixed', bottom: 16, right: 16,
+                        '& .MuiFab-primary': {
+                            color: '#e6a700',
+                            backgroundColor: '#ffffff',
+                            '&:hover': { backgroundColor: '#f0f0f0' }
+                        }
+                    }}
+                    icon={<AddIcon />}
+                    tooltipTitle="Get Started"
+                    onClick={() => setShowUserDetails(true)}
+                >
+                </SpeedDial>
+            </Tooltip>
         </React.Fragment>
     )
 }
