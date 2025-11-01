@@ -3,50 +3,72 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Avatar } from '@mui/material';
+import { Avatar, Stack } from '@mui/material';
+import moment from 'moment'
 
 export default function SearchAppBar(props) {
-    const { userDetails } = props;
-    const { name, profilePicture, email } = userDetails || {};
+    const { userDetails, avatarSrc } = props;
+    const { email } = userDetails || {};
     const getInitials = (fullName) => {
         if (!fullName) return 'U';
         const parts = fullName.trim().split(/\s+/);
         if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
         return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
     };
-    const initials = getInitials(name);
+    const initials = getInitials(email);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#e6a700' }}>
                 <Toolbar>
+                    <span className='material-symbols-outlined' style={{ fontSize: '30px', color: '#ffffffff' }}>note_stack</span>
                     <Typography
                         sx={{
                             flexGrow: 1,
-                            display: { xs: 'none', sm: 'block' },
-                            fontFamily: '"Roboto", sans-serif',
+                            fontFamily: '"Macondo", cursive',
                             fontSize: '20px',
                             fontWeight: 'bold',
                             color: '#ffffffff',
                             textTransform: 'capitalize',
                             letterSpacing: '1px',
+                            mx: 1
                         }}
                     >
-                        Welcome, {name || 'User'}
+                        My Notes
                     </Typography>
-                    <Avatar
-                        alt={name || 'U'}
-                        src={profilePicture || undefined}
-                        sx={{
-                            ml: 2,
-                            backgroundColor: '#ffffff',
-                            color: '#e6a700',
-                            border: '1px solid #ffffff',
-                        }}
-                        title={`${name || 'User'} (${email || 'No Email'})`}
-                    >
-                        {!profilePicture && initials}
-                    </Avatar>
+                    <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
+                        <Avatar
+                            alt={email}
+                            src={avatarSrc || undefined}
+                            sx={{
+                                ml: 2,
+                                backgroundColor: '#ffffff',
+                                color: '#e6a700',
+                                border: '2px solid #ffffff',
+                            }}
+                            title={`${email || 'No Email'}`}
+                        >
+                            {!avatarSrc && initials}
+                        </Avatar>
+                        <Stack>
+                            <Typography sx={{
+                            fontFamily: '"Roboto", sans-serif',
+                            fontSize: '14px',
+                            fontWeight: 500,
+                            mx: 1
+                        }}>
+                            {email}
+                        </Typography>
+                        <Typography sx={{
+                            fontFamily: '"Roboto", sans-serif',
+                            fontSize: '14px',
+                            fontWeight: 500,
+                            mx: 1
+                        }}>
+                            {moment().format("MMM DD, YYYY")}
+                        </Typography>
+                        </Stack>
+                    </Stack>
                 </Toolbar>
             </AppBar>
         </Box>

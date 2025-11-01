@@ -70,7 +70,7 @@ const AddTask = ({ open, onClose }) => {
                 }}
             >
                 <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#e6a700', color: '#ffffffff' }}>
-                    Add Task
+                    Add Notes
                     <IconButton
                         aria-label="close"
                         onClick={() => handleClose()}
