@@ -182,7 +182,7 @@ const AddTask = ({ open, onClose }) => {
                                             color: '#e6a700',
                                         },
                                         fontFamily: '"Roboto", sans-serif',
-                                        fontSize: '14px',
+                                        fontSize: '14px'
 
                                     }}
 
