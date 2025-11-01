@@ -121,7 +121,7 @@ export const LogInPopup = (props) => {
                         {"Let's get setup your account"}
                     </Typography>
                 </Divider>
-                <Stack direction={"column"} alignItems={"center"} sx={{ mt: 2 }}    >
+                <Stack direction={"column"} alignItems={"center"} sx={{ mt:2,mb:1 }}    >
                     <UploadAvatars avatarSrc={avatarSrc} setAvatarSrc={setAvatarSrc} />
                 </Stack>
                 <Box>
@@ -173,7 +173,7 @@ export const LogInPopup = (props) => {
                                 '& .MuiInputLabel-root.Mui-focused': { color: '#e6a700' },
                                 '& .MuiInput-underline:before': { borderBottomColor: '#e6a700' },
                                 '& .MuiInput-underline:after': { borderBottomColor: '#e6a700' },
-                                mb: item.field === 'email' ? 3 : 0,
+                                my: 2,
                                 width: '300px'
                             }}
                         />
